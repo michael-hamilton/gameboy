@@ -38,6 +38,7 @@ body {
 
 .cpuStateWrapper {
   border: 1px solid #373737;
+  border-radius: 5px;
   display: flex;
   flex-direction: row;
   margin: 10px;
@@ -72,12 +73,28 @@ body {
 }
 
 button {
-  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 0 #6e6e6e;
+  font-size: 14px;
   min-width: 100px;
+  padding: 10px;
+  transition: 0.025s;
 
   &.active {
     background-color: darkgreen;
+    box-shadow: 1px 1px 2px 0 #6e6e6e inset;
     color: white;
+    font-size: 13px;
+  }
+
+  &:active {
+    box-shadow: 1px 1px 2px 0 #6e6e6e inset;
+    font-size: 13px;
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
   }
 }
 

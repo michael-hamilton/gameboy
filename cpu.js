@@ -1,9 +1,9 @@
 /*
- * Z80 CPU Emulator
- * © 2019-2020 Michael Hamilton
+ * Gameboy CPU Emulator
+ * © 2020 Michael Hamilton
  */
 
-class z80 {
+class CPU {
   constructor(memory) {
     this.registers = {
       a: 0x00,
@@ -14,11 +14,6 @@ class z80 {
       h: 0x00,
       l: 0x00,
       pc: 0x0000
-    };
-
-    this.busses = {
-      data: 0x00,
-      address: 0x0000
     };
 
     this.isReset = false;
@@ -46,12 +41,8 @@ class z80 {
     return this.registers;
   }
 
-  getDataOnBus() {
-    return this.busses.data;
-  }
-
-  getAddressOnBus() {
-    return this.busses.address;
+  readMemory(address) {
+    return this.memory.readByte(address);
   }
 
   handleClockStep() {
@@ -80,10 +71,6 @@ class z80 {
 
   getPC() {
     return this.registers.pc;
-  }
-
-  readMemory(address) {
-    return this.memory[address];
   }
 
   executeOpcode(opcode){
@@ -194,4 +181,4 @@ class z80 {
   }
 }
 
-export default z80;
+export default CPU;
