@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CPU from '../cpu';
 import Memory from '../memory';
+import Screen from '../screen';
 import ROM from '../ROM';
 import './debugger.scss';
 
@@ -43,7 +44,20 @@ export default class Debugger extends Component {
     this.memory = new Memory(0xf, ROM);
     this.cpu = new CPU(this.memory);
     this.memory.bulkWrite(ROM);
+    this.screen = null;
+    this.videoBuffer = [];
   }
+
+  componentDidMount() {
+    this.screen = new Screen(document.getElementById('screen'));
+
+    setInterval(() => {
+      // this.generateRandomVideoBuffer();
+      // this.screen.fillBuffer(this.videoBuffer);
+      // window.requestAnimationFrame(this.screen.drawBuffer.bind(this.screen));
+    }, 60);
+  }
+
 
   stepClock() {
     this.cpu.handleClockStep();
@@ -52,6 +66,7 @@ export default class Debugger extends Component {
     });
     this.forceUpdate();
   }
+
 
   changeClockRate(rate) {
     this.setState({
@@ -92,6 +107,21 @@ export default class Debugger extends Component {
     }
   }
 
+  generateRandomVideoBuffer() {
+    for (let i = 0; i < 10000; i += 4) {
+      // Percentage in the x direction, times 255
+      let x = (i % 400) / 400 * 255;
+      // Percentage in the y direction, times 255
+      let y = Math.ceil(i / 400) / 100 * 255;
+
+      // Modify pixel data
+      this.videoBuffer[i + 0] = x;        // R value
+      this.videoBuffer[i + 1] = y;        // G value
+      this.videoBuffer[i + 2] = 255 - x;  // B value
+      this.videoBuffer[i + 3] = 255;      // A value
+    }
+  }
+
   renderMemoryContents(pc, start, length) {
     let currentCol = 0;
     const renderContent = [];
@@ -123,7 +153,8 @@ export default class Debugger extends Component {
         currentCol=0;
         row.length=0;
       }
-    };
+    }
+
     return renderContent;
   }
 
@@ -180,6 +211,10 @@ export default class Debugger extends Component {
             <div>
               <h3>Memory</h3>
               <table><tbody>{this.renderMemoryContents(this.cpu.getPC(), 0x0000, 0x00ff)}</tbody></table>
+            </div>
+
+            <div>
+              <canvas id='screen' className='screen' height={144} width={160} />
             </div>
           </div>
         </div>
