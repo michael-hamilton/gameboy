@@ -23,7 +23,7 @@ class Screen {
   }
 
   fillBuffer(data) {
-    // this.buffer = data;
+    this.buffer = data;
   }
 
   drawBuffer() {

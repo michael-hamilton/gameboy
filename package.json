@@ -1,26 +1,25 @@
 {
-  "name": "z80",
+  "name": "gameboy",
   "version": "0.0.1",
   "description": "A Javascript emulated Z80 CPU.",
-  "main": "index.js",
+  "main": "debugger/electron.js",
   "license": "MIT",
   "repository": "https://github.com/michael-hamilton/z80.git",
   "author": "Michael Hamilton <michaelhamilton626@gmail.com>",
   "scripts": {
-    "dev": "NODE_ENV=development && parcel app/app.html --cache-dir app/.cache --out-dir app/dist & wait-on http://localhost:1234 && electron index.js"
+    "dev": "NODE_ENV=development && parcel debugger/app.html --cache-dir debugger/.cache --out-dir debugger/dist & wait-on http://localhost:1234 && electron debugger/electron.js"
   },
   "build": {
     "appId": "cule",
     "files": [
-      "dist/**/*",
-      "assets/"
+      "debugger/**/*"
     ]
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
-    "electron": "^6.0.11",
+    "electron-builder": "^22.10.5",
     "parcel-bundler": "^1.12.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -29,5 +28,6 @@
     "wait-on": "^3.3.0"
   },
   "dependencies": {
+    "electron": "^12.0.5"
   }
 }

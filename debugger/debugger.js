@@ -52,9 +52,9 @@ export default class Debugger extends Component {
     this.screen = new Screen(document.getElementById('screen'));
 
     setInterval(() => {
-      // this.generateRandomVideoBuffer();
-      // this.screen.fillBuffer(this.videoBuffer);
-      // window.requestAnimationFrame(this.screen.drawBuffer.bind(this.screen));
+      this.generateRandomVideoBuffer();
+      this.screen.fillBuffer(this.videoBuffer);
+      window.requestAnimationFrame(this.screen.drawBuffer.bind(this.screen));
     }, 60);
   }
 
