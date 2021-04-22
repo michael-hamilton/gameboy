@@ -180,16 +180,16 @@ export default class Debugger extends Component {
             </div>
 
             <div className='control-section'>
-                <ControlButton
-                  onClick={() => this.toggleClock()}
-                  label={this.state.clock.running ? 'Stop Clock' : 'Start Clock'}
-                  active={this.state.clock.running}
-                />
-                <div className='slider'>
-                  <input disabled={this.state.clock.running} type="range" min="1" max="25" value={this.state.clock.rate} className="slider" onChange={(e) => this.changeClockRate(e.target.value)} />
-                  <span>{this.state.clock.rate}hz</span>
-                </div>
-                <p>Total cycles - {this.state.cycles}</p>
+              <ControlButton
+                onClick={() => this.toggleClock()}
+                label={this.state.clock.running ? 'Stop Clock' : 'Start Clock'}
+                active={this.state.clock.running}
+              />
+              <div className='slider'>
+                <input disabled={this.state.clock.running} type="range" min="1" max="25" value={this.state.clock.rate} className="slider" onChange={(e) => this.changeClockRate(e.target.value)} />
+                <span>{this.state.clock.rate}hz</span>
+              </div>
+              <p>Total cycles - {this.state.cycles}</p>
             </div>
           </div>
 
