@@ -18,8 +18,6 @@ class Screen {
       this.imageData[i + 2] = 255 - x;  // B value
       this.imageData[i + 3] = 255;      // A value
     }
-
-    this.drawBuffer();
   }
 
   fillBuffer(data) {

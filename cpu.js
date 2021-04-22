@@ -35,6 +35,7 @@ class CPU {
     this.registers.l = 0x00
     this.registers.pc = 0x0000;
     this.t = 0;
+    this.m = 0;
   }
 
   getRegisterState() {

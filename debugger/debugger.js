@@ -41,7 +41,7 @@ export default class Debugger extends Component {
       },
     };
 
-    this.memory = new Memory(0xf, ROM);
+    this.memory = new Memory(0xf);
     this.cpu = new CPU(this.memory);
     this.memory.bulkWrite(ROM);
     this.screen = null;
@@ -50,12 +50,14 @@ export default class Debugger extends Component {
 
   componentDidMount() {
     this.screen = new Screen(document.getElementById('screen'));
+    this.screen.drawBuffer();
 
-    setInterval(() => {
-      this.generateRandomVideoBuffer();
-      this.screen.fillBuffer(this.videoBuffer);
-      window.requestAnimationFrame(this.screen.drawBuffer.bind(this.screen));
-    }, 60);
+
+    // setInterval(() => {
+    //   this.generateRandomVideoBuffer();
+    //   this.screen.fillBuffer(this.videoBuffer);
+    //   window.requestAnimationFrame(this.screen.drawBuffer.bind(this.screen));
+    // }, 60);
   }
 
 
@@ -140,7 +142,7 @@ export default class Debugger extends Component {
               row.map((rowValue, index) => {
                 currentAddress++;
                 return (
-                  <td className='monospace'>
+                  <td key={currentAddress} className='monospace'>
                     <span className={pc === currentAddress ? 'active' : null}>
                       {dec2hex(rowValue).toUpperCase()}
                     </span>
@@ -186,7 +188,7 @@ export default class Debugger extends Component {
                 active={this.state.clock.running}
               />
               <div className='slider'>
-                <input disabled={this.state.clock.running} type="range" min="1" max="25" value={this.state.clock.rate} className="slider" onChange={(e) => this.changeClockRate(e.target.value)} />
+                <input disabled={this.state.clock.running} type="range" min="1" max="50" value={this.state.clock.rate} className="slider" onChange={(e) => this.changeClockRate(e.target.value)} />
                 <span>{this.state.clock.rate}hz</span>
               </div>
               <p>Total cycles - {this.state.cycles}</p>
