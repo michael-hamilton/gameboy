@@ -54,12 +54,24 @@ export default class Debugger extends Component {
     this.screen = new Screen(document.getElementById('screen'));
     this.screen.drawBuffer();
 
+    for (let i = 0; i < 92160; i += 4) {
+      // Percentage in the x direction, times 255
+      let x = (i % 400) / 400 * 255;
+      // Percentage in the y direction, times 255
+      let y = Math.ceil(i / 400) / 100 * 255;
 
-    setInterval(() => {
-      this.generateRandomVideoBuffer();
-      this.screen.fillBuffer(this.videoBuffer);
-      window.requestAnimationFrame(this.screen.drawBuffer.bind(this.screen));
-    }, 1);
+      // Modify pixel data
+      this.videoBuffer[i] = x;           // R value
+      this.videoBuffer[i + 1] = y;       // G value
+      this.videoBuffer[i + 2] = 255 - x; // B value
+      this.videoBuffer[i + 3] = 255;     // A value
+    }
+
+    // setInterval(() => {
+    //   this.generateRandomVideoBuffer();
+    //   this.screen.fillBuffer(this.videoBuffer);
+    //   window.requestAnimationFrame(this.screen.drawBuffer.bind(this.screen));
+    // }, 1);
   }
 
 
