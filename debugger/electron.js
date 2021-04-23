@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 
 const createWindow = () => {
     let win = new BrowserWindow({
@@ -16,3 +16,17 @@ const createWindow = () => {
 }
 
 app.on('ready', createWindow);
+
+const isMac = process.platform === 'darwin'
+
+const menuTemplate = [
+    ...(isMac ? [{
+        label: app.name,
+        submenu: [
+            { role: 'quit' }
+        ]
+    }] : [])
+]
+
+const menu = Menu.buildFromTemplate(menuTemplate)
+Menu.setApplicationMenu(menu)
