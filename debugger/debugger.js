@@ -225,6 +225,7 @@ export default class Debugger extends Component {
             </div>
 
             <div>
+              <h3>Screen</h3>
               <canvas id='screen' className='screen' height={144} width={160} />
             </div>
           </div>
