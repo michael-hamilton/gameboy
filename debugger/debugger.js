@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CPU from '../cpu';
 import Memory from '../memory';
 import Screen from '../screen';
-import ROM from '../ROM';
+import TETRIS from '../TETRIS';
 import './debugger.scss';
 
 const dec2hex = (i) => {
@@ -43,9 +43,9 @@ export default class Debugger extends Component {
       },
     };
 
-    this.memory = new Memory(0xf);
+    this.memory = new Memory(0x0000);
     this.cpu = new CPU(this.memory);
-    this.memory.bulkWrite(ROM);
+    this.memory.bulkWrite(TETRIS);
     this.screen = null;
     this.videoBuffer = [];
   }
@@ -140,13 +140,15 @@ export default class Debugger extends Component {
     let currentAddress = 0;
     const endAddress = this.memory.getMemorySize() < length - start ? this.memory.getMemorySize() : start + length;
     for(let address=start; address<endAddress; address++) {
-      if(currentCol < 8) {
+      if(currentCol < 15) {
         row.push(this.memory.readByte(address));
         currentCol++;
       }
       else {
         renderContent.push(
           <tr key={address}>
+            <td className='monospace'>ROM:{(address-15).toString(16).padStart(4, '0').toUpperCase()}</td>
+            <td>&nbsp;</td>
             {
               row.map((rowValue, index) => {
                 currentAddress++;
@@ -204,7 +206,12 @@ export default class Debugger extends Component {
             </div>
           </div>
 
-          <div className='cpuStateWrapper'>
+          <div className='debuggerWrapper'>
+            <div className='memoryTableWrapper'>
+              <h3>ROM</h3>
+              <table className='memoryTable'><tbody>{this.renderMemoryContents(this.cpu.getPC(), 0x0000, 0xffff)}</tbody></table>
+            </div>
+
             <div>
               <h3>CPU</h3>
               <ul>
@@ -217,11 +224,6 @@ export default class Debugger extends Component {
               <ul>
                 <ValueList items={this.cpu.getRegisterState()} hex />
               </ul>
-            </div>
-
-            <div>
-              <h3>Memory</h3>
-              <table><tbody>{this.renderMemoryContents(this.cpu.getPC(), 0x0000, 0x00ff)}</tbody></table>
             </div>
 
             <div>
